@@ -1,0 +1,35 @@
+
+#n/** Configure pins as #n #t#t #t* Analog #n #t#t #t* Input #n #t#t #t* Output#n #t#t #t* EVENT_OUT#n #t#t #t* EXTI
+*/
+static void MX_GPIO_Init(void)
+{
+#n
+#tGPIO_InitTypeDef GPIO_InitStruct;
+#n#t/* GPIO Ports Clock Enable */
+#t__HAL_RCC_GPIOD_CLK_ENABLE();
+#t__HAL_RCC_GPIOA_CLK_ENABLE();
+#t__HAL_RCC_GPIOB_CLK_ENABLE();
+#n#t/*Configure GPIO pin Output Level */
+#tHAL_GPIO_WritePin(GPIOA, INJ1_Pin|INJ2_Pin|INJ3_Pin|INJ4_Pin, GPIO_PIN_RESET);
+#n#t/*Configure GPIO pin Output Level */
+#tHAL_GPIO_WritePin(GPIOB, LCD_RS_Pin|LCD_D4_Pin|LCD_D5_Pin|LCD_D6_Pin #n#t#t#t#t#t#t#t#t#t#t#t#t#t|LCD_D7_Pin|LCD_E_Pin, GPIO_PIN_RESET);
+#n#t/*Configure GPIO pins : INJ1_Pin INJ2_Pin INJ3_Pin INJ4_Pin */
+#tGPIO_InitStruct.Pin = INJ1_Pin|INJ2_Pin|INJ3_Pin|INJ4_Pin;
+#tGPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+#tGPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+#tHAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+#n#t/*Configure GPIO pins : STARTSTOP_Pin ITERATIONS_Pin TIME_Pin */
+#tGPIO_InitStruct.Pin = STARTSTOP_Pin|ITERATIONS_Pin|TIME_Pin;
+#tGPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+#tGPIO_InitStruct.Pull = GPIO_PULLUP;
+#tHAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+#n#t/*Configure GPIO pins : LCD_RS_Pin LCD_D4_Pin LCD_D5_Pin LCD_D6_Pin #n#t#t#t#t#t#t#t#t#t#t#t#t#t LCD_D7_Pin LCD_E_Pin */
+#tGPIO_InitStruct.Pin = LCD_RS_Pin|LCD_D4_Pin|LCD_D5_Pin|LCD_D6_Pin #n#t#t#t#t#t#t#t#t#t#t#t#t#t|LCD_D7_Pin|LCD_E_Pin;
+#tGPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+#tGPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+#tHAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+#n#t/* EXTI interrupt init*/
+#tHAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+#tHAL_NVIC_EnableIRQ(EXTI9_5_IRQn);#n#n
+}
+#n
